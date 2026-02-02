@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>A Valentine's Day Surprise</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+      html { -webkit-text-size-adjust: 100%; }
+      @media (max-width: 430px) {
+        .container { justify-content: flex-start; align-content: start; }
+        #landing-page { padding-top: calc(80px + env(safe-area-inset-top)); }
+        #landing-page h1 {
+          font-size: clamp(1.1rem, 5.5vw, 1.6rem) !important;
+          line-height: 1.25;
+          max-width: 92vw;
+          padding: 0 16px;
+          margin: 0 auto 16px;
+          white-space: normal;
+          word-break: break-word;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          hyphens: auto;
+        }
+        .chat-image { max-height: 46vh !important; }
+        #transition-caption { font-size: 0.95rem !important; }
+      }
+    </style>
+</head>
+<body>
+    <div class="container" id="landing-page">
+        <h1>The butterfly Effect of your "Hey" and that's how our journey began.</h1>
+        <img src="images/Untitled design (9).png" alt="Our Hinge Chat" class="chat-image">
+        <button id="fast-forward">fast forward</button>
+    </div>
+
+    <div class="container" id="transition-container" style="display: none;">
+        <div class="flipper">
+            <div class="page front"></div>
+            <div class="page back"></div>
+        </div>
+        <p id="transition-caption" style="position: absolute; bottom: 56px; left: 50%; transform: translateX(-50%); color: #fff; background: rgba(0, 0, 0, 0.35); padding: 10px 16px; border-radius: 9999px; backdrop-filter: blur(8px); font-size: 1.1rem; margin: 0;">And the days flew by with you. We made so many memories :)</p>
+    </div>
+
+    <div class="container" id="feb-page" style="display: none;">
+        <p style="margin-bottom: 20px; font-size: 1.6rem; color: #ffffff; background: rgba(0,0,0,0.35); padding: 10px 16px; border-radius: 9999px; backdrop-filter: blur(8px); text-shadow: 0 2px 6px rgba(0,0,0,0.35);">And finally our first feb together is here</p>
+        <button id="enter-feb-button">Enter Feb</button>
+    </div>
+
+    <div class="container" id="proposal-page" style="display: none;">
+        <img src="images/Untitled design (10).png" alt="Us" class="proposal-sticker" style="max-width: 220px; width: 40vw; margin-bottom: 12px; filter: drop-shadow(0 10px 24px rgba(0,0,0,0.35));" />
+        <h1>Will you be my valentine?</h1>
+        <video id="valentine-video" loop muted autoplay playsinline>
+            <source src="videos/valentine.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="buttons">
+            <button id="yes-button">Yes</button>
+            <button id="no-button">No</button>
+        </div>
+        <p id="no-button-quote"></p>
+    </div>
+
+    <div class="container" id="final-message-page" style="display: none;">
+        <div class="celebration"></div>
+        <p class="final-topline" style="margin-top:10px;margin-bottom:20px;font-size:1.25rem;color:#ffffff;background:rgba(0,0,0,0.35);padding:10px 16px;border-radius:9999px;backdrop-filter:blur(8px);max-width:90vw;">Thank You for being my valentine Babe! I knew you would say yes :p</p>
+        <img src="images/journey-14.png" alt="More memories together" class="final-journey" style="max-width:75vw;max-height:60vh;width:auto;height:auto;border-radius:12px;border:8px solid rgba(255,255,255,0.95);box-shadow:0 12px 32px rgba(0,0,0,0.35);margin:10px 0 16px;object-fit:contain;background:#0d0d0d;" />
+        <h1>I love youuu Kavyaaaaa &lt;3</h1>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

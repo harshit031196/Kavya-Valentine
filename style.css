@@ -1,0 +1,305 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    height: 100dvh; /* iOS Safari modern viewport */
+    min-height: 100svh; /* support for small viewport on iOS */
+    overflow-x: hidden;
+    overflow-y: auto;
+    transition: background-color 1s ease;
+}
+
+/* Subtle animated background blobs for a modern feel */
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    width: 55vmax;
+    height: 55vmax;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 0;
+}
+
+body::before {
+    top: -10vmax;
+    left: -10vmax;
+    background: radial-gradient(circle at 30% 30%, #ff4081 0%, rgba(255,64,129,0.0) 60%);
+    animation: floatA 16s ease-in-out infinite alternate;
+}
+
+body::after {
+    bottom: -12vmax;
+    right: -12vmax;
+    background: radial-gradient(circle at 70% 70%, #9c27b0 0%, rgba(156,39,176,0.0) 60%);
+    animation: floatB 18s ease-in-out infinite alternate;
+}
+
+@keyframes floatA {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(2vmax, 3vmax) scale(1.05); }
+}
+
+@keyframes floatB {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-3vmax, -2vmax) scale(1.07); }
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    padding-top: calc(20px + env(safe-area-inset-top));
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    padding-left: calc(20px + env(safe-area-inset-left));
+    padding-right: calc(20px + env(safe-area-inset-right));
+    box-sizing: border-box;
+    display: none; /* All pages hidden by default */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+    gap: 12px;
+    position: relative;
+    z-index: 1; /* keep above background blobs */
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+    transition: opacity .45s ease, transform .55s cubic-bezier(0.4, 0.14, 0.3, 1);
+}
+
+.container.page-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+#landing-page h1, #proposal-page h1, #final-message-page h1 {
+    font-size: 2.25rem;
+    font-weight: 500;
+    margin-bottom: 40px;
+    animation: fadeIn 2s ease-in-out;
+    max-width: 92vw;
+    padding: 0 16px;
+    line-height: 1.2;
+    word-break: break-word;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.chat-image {
+    max-width: 90vw;
+    height: auto;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    max-height: 60vh; /* better fit on small screens */
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+}
+
+#fast-forward {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+#fast-forward:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.flipper {
+    width: min(90vw, 720px);
+    height: min(60vh, 520px);
+    perspective: 1000px;
+    position: relative;
+    margin-top: 10px;
+    transform-style: preserve-3d;
+}
+
+/* Calendar binding bar and holes */
+.flipper::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px;
+    height: 10px;
+    border-radius: 6px;
+    background: linear-gradient(180deg, #e0e0e0, #bdbdbd);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+
+.flipper::after {
+    content: "";
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px;
+    height: 10px;
+    background: radial-gradient(circle at 10% 50%, rgba(0,0,0,0.35) 0 3px, transparent 4px),
+                radial-gradient(circle at 40% 50%, rgba(0,0,0,0.35) 0 3px, transparent 4px),
+                radial-gradient(circle at 70% 50%, rgba(0,0,0,0.35) 0 3px, transparent 4px),
+                radial-gradient(circle at 100% 50%, rgba(0,0,0,0.35) 0 3px, transparent 4px);
+    pointer-events: none;
+}
+
+.page {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    transition: transform 0.35s cubic-bezier(0.4, 0.14, 0.3, 1), box-shadow .35s ease;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #0d0d0d;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transform-origin: top center; /* hinge at the top like a calendar */
+    will-change: transform;
+    box-sizing: border-box;
+    border: 10px solid rgba(255,255,255,0.95);
+    overflow: hidden;
+}
+
+/* Subtle dynamic shading during flips for realism */
+.page::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient( to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.05) 30%, rgba(0,0,0,0) 60% );
+    opacity: 0;
+    transition: opacity .3s ease;
+    pointer-events: none;
+}
+
+.flipper .back::after { opacity: .35; }
+.flipper.flipped .back::after { opacity: 0; }
+.flipper.flipped .front::after { opacity: .45; }
+
+.front {
+    transform: rotateX(0deg);
+}
+
+.back {
+    transform: rotateX(180deg);
+}
+
+.flipper.flipped .front {
+    transform: rotateX(-180deg);
+}
+
+.flipper.flipped .back {
+    transform: rotateX(0deg);
+}
+
+#enter-feb-button {
+    background: linear-gradient(45deg, #ff8a80, #ff4081);
+    color: #fff;
+    border: none;
+    padding: 20px 40px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(255, 64, 129, 0.5);
+}
+
+#enter-feb-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(255, 64, 129, 0.7);
+}
+
+#proposal-page {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+}
+
+#proposal-page h1 {
+    font-size: clamp(1.8rem, 6vw, 3.5rem);
+    color: #fff;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+}
+
+#final-message-page h1 {
+    font-size: clamp(2rem, 6.5vw, 4rem);
+    color: #ff4081;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+}
+
+.petal {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #ff4081;
+    border-radius: 0 50% 50% 50%;
+    animation: fall linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+#valentine-video {
+    max-width: 100%;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+#yes-button, #no-button {
+    padding: 15px 30px;
+    font-size: 1.5em;
+    cursor: pointer;
+    border-radius: 50px;
+    border: none;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+#yes-button {
+    background-color: #ff4081;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+#yes-button:hover {
+    transform: scale(1.2);
+}
+
+#no-button {
+    background-color: #000;
+    color: #fff;
+}
+
+#no-button-quote {
+    margin-top: 20px;
+    font-style: italic;
+}
